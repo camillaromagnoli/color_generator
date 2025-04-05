@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../mocks/color_generator_view_model_mock.dart';
 import '../mocks/colors_mock.dart';
-import '../mocks/view_model_mock.dart';
 
 ProviderContainer createContainer({
   ProviderContainer? parent,
@@ -24,19 +24,15 @@ ProviderContainer createContainer({
 }
 
 void main() {
-  late ProviderContainer container;
+  final ProviderContainer container = ProviderContainer(
+    overrides: [
+      colorGeneratorViewModelProvider.overrideWith(
+        () => ColorGeneratorViewModelMock(lightColorMock),
+      ),
+    ],
+  );
 
-  setUp(() {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    container = ProviderContainer(
-      overrides: [
-        colorGeneratorViewModelProvider.overrideWith(
-          () => ColorGeneratorViewModelMock(lightColorMock),
-        ),
-      ],
-    );
-  });
+  setUp(WidgetsFlutterBinding.ensureInitialized);
 
   group('HomeView tests...', () {
     testWidgets('HomeView displays a light background with dark text', (

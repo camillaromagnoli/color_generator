@@ -14,6 +14,12 @@ part 'color_generator_view_model.g.dart';
 /// via [refreshColor].
 @riverpod
 class ColorGeneratorViewModel extends _$ColorGeneratorViewModel {
+  /// The maximum value for any ARGB color channel (Alpha, Red, Green or Blue).
+  static const int maxColorRange = 256;
+
+  /// The value for the opacity.
+  static const int opacity = 255;
+
   @override
   Color build() => _generateRandomColor();
 
@@ -24,10 +30,10 @@ class ColorGeneratorViewModel extends _$ColorGeneratorViewModel {
 
   Color _generateRandomColor() {
     return Color.fromARGB(
-      255,
-      Random().nextInt(256),
-      Random().nextInt(256),
-      Random().nextInt(256),
+      opacity,
+      Random().nextInt(maxColorRange),
+      Random().nextInt(maxColorRange),
+      Random().nextInt(maxColorRange),
     );
   }
 }
